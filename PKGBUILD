@@ -11,7 +11,7 @@ url="https://sinelaw.github.io/fresh/"
 license=("GPL-2.0-only")
 arch=('x86_64' 'aarch64')
 depends=("gcc-libs" "glibc")
-makedepends=("cargo")
+makedepends=("cargo" "clang")
 provides=("fresh-editor")
 conflicts=("fresh-editor-bin")
 options=('!debug')
@@ -26,6 +26,7 @@ prepare() {
 build() {
     cd "fresh-$pkgver"
     export CARGO_TARGET_DIR=target
+    export CC=clang
     cargo build --locked --release
 }
 
