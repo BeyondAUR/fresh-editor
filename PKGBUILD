@@ -44,11 +44,22 @@ package() {
     # License
     install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 
+    # Provenance receipt (belt-and-suspenders alongside the embedded channel).
+    cat > "$pkgdir/usr/share/$pkgname/install-receipt.toml" <<EOF
+schema = 1
+channel = "beyondaur"
+version = "$pkgver"
+package_name = "fresh-editor"
+managed = true
+self_update = false
+EOF
+
+
     # Plugins
     cp -r crates/fresh-editor/plugins "$pkgdir/usr/share/$pkgname/"
 
     # Keymaps
-    cp -r crates/fresh-editor/keymaps "$pkgdir/usr/share/$pkgname/"
+    cp -r crates/fresh-editor-core/keymaps "$pkgdir/usr/share/$pkgname/"
 
     # Desktop file
     install -Dm644 crates/fresh-editor/resources/fresh.desktop "$pkgdir/usr/share/applications/fresh.desktop"
